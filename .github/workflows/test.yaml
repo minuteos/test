@@ -1,0 +1,16 @@
+name: Test
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Latest Libs
+        run: git submodule update --init --remote --recursive
+      - name: Build Tests
+        run: make tests -j7
+      - name: Run Tests
+        run: |
+          make test TEST_SUMMARY=out/summary.md
+          cat out/summary.md >> $GITHUB_STEP_SUMMARY
+          ! grep -q "| :x: " out/summary.md

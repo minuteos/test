@@ -1,6 +1,8 @@
 [submodule "lib"]
 	path = lib
 	url = https://github.com/minuteos/lib
+	branch = main
 [submodule "lib-arm"]
 	path = lib-arm
 	url = https://github.com/minuteos/lib-arm
+	branch = main

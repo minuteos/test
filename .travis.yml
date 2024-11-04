@@ -1,4 +1,0 @@
-language: cpp
-git:
-  submodules: true
-script: "make test"

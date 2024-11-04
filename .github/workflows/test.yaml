@@ -1,5 +1,14 @@
 name: Test
-on: push
+run-name: Test repo ${{ inputs.override-repo }} commit ${{ inputs.override-commit }}
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      override-repo:
+        type: string
+      override-commit:
+        type: string
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -7,6 +16,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Use Latest Libs
         run: git submodule update --init --remote --recursive
+      - name: Checkout Target Repo
+        if: inputs.override-repo && inputs.override-commit
+        env:
+          OVERRIDE_REPO: ${{ inputs.override-repo }}
+          OVERRIDE_COMMIT: ${{ inputs.override-commit }}
+        run: git -C ${OVERRIDE_REPO##*/} checkout $OVERRIDE_COMMIT
       - name: Build Tests
         run: make tests -j7
       - name: Run Tests

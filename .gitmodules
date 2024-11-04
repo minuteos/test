@@ -6,3 +6,7 @@
 	path = lib-arm
 	url = https://github.com/minuteos/lib-arm
 	branch = main
+[submodule "lib-nvram"]
+	path = lib-nvram
+	url = https://github.com/minuteos/lib-nvram
+	branch = main

@@ -14,3 +14,20 @@ jobs:
           make test TEST_SUMMARY=out/summary.md
           cat out/summary.md >> $GITHUB_STEP_SUMMARY
           ! grep -q "| :x: " out/summary.md
+  test-arm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: carlosperate/arm-none-eabi-gcc-action@v1
+      - uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: qemu-system-arm
+      - uses: actions/checkout@v4
+      - name: Use Latest Libs
+        run: git submodule update --init --remote --recursive
+      - name: Build Tests
+        run: make tests -j7 TARGET=qemu-arm
+      - name: Run Tests
+        run: |
+          make test TARGET=qemu-arm TEST_SUMMARY=out/summary.md
+          cat out/summary.md >> $GITHUB_STEP_SUMMARY
+          ! grep -q "| :x: " out/summary.md

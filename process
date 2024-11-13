@@ -1,0 +1,23 @@
+#!/usr/bin/env -S awk -f
+
+BEGIN {
+    FS="[*]{2}"
+    nlines = total = pass = fail = 0
+}
+
+{
+    lines[nlines++] = $0
+}
+
+$2 == "TOTAL" {
+    total += $4
+    pass += $6
+    fail += $8
+}
+
+END {
+    print "![Static Badge](https://img.shields.io/badge/tests-" pass "%20passed,%20" fail "%20failed-" (fail ? "red" : "green") ")"
+    print ""
+    for (i=0; i<nlines; i++) { print lines[i] }
+    exit fail != 0
+}

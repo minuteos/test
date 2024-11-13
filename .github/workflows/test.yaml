@@ -27,8 +27,7 @@ jobs:
       - name: Run Tests
         run: |
           make test TEST_SUMMARY=out/summary.md
-          cat out/summary.md >> $GITHUB_STEP_SUMMARY
-          ! grep -q "| :x: " out/summary.md
+          ./process out/summary.md >> $GITHUB_STEP_SUMMARY
   test-arm:
     runs-on: ubuntu-latest
     steps:
@@ -44,5 +43,4 @@ jobs:
       - name: Run Tests
         run: |
           make test TARGET=qemu-arm TEST_SUMMARY=out/summary.md
-          cat out/summary.md >> $GITHUB_STEP_SUMMARY
-          ! grep -q "| :x: " out/summary.md
+          ./process out/summary.md >> $GITHUB_STEP_SUMMARY

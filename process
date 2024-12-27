@@ -2,7 +2,7 @@
 
 BEGIN {
     FS="[*]{2}"
-    nlines = total = pass = fail = 0
+    nlines = total = duration = pass = fail = 0
 }
 
 {
@@ -11,12 +11,13 @@ BEGIN {
 
 $2 == "TOTAL" {
     total += $4
-    pass += $6
-    fail += $8
+    duration += $6
+    pass += $8
+    fail += $10
 }
 
 END {
-    print "![Static Badge](https://img.shields.io/badge/tests-" pass "%20passed,%20" fail "%20failed-" (fail ? "red" : "green") ")"
+    print "![Static Badge](https://img.shields.io/badge/tests-" pass "%20passed,%20" fail "%20failed%20in%20" duration "ms-" (fail ? "red" : "green") ")"
     print ""
     for (i=0; i<nlines; i++) { print lines[i] }
     exit fail != 0

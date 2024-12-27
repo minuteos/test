@@ -10,3 +10,7 @@
 	path = lib-nvram
 	url = https://github.com/minuteos/lib-nvram
 	branch = main
+[submodule "lib-fatfs"]
+	path = lib-fatfs
+	url = https://github.com/minuteos/lib-fatfs
+	branch = main
